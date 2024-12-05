@@ -1,0 +1,203 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: andrej (generated)
+      changes:
+        - createTable:
+            tableName: authorities
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: authority
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: full_name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: username
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: password
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: groupe_id
+                  type: BIGINT
+
+        - createTable:
+            tableName: groupe
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+
+        - createTable:
+            tableName: subject
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: code
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+
+        - createTable:
+            tableName: subject_groupe
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: subject_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_subject_groupe_subject
+                    references: subject(id)
+              - column:
+                  name: groupe_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_subject_groupe_groupe
+                    references: groupe(id)
+
+        - createTable:
+            tableName: grades
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: subject
+                  type: VARCHAR(255)
+              - column:
+                  name: grade
+                  type: INTEGER
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_grade_user
+                    references: users(id)
+              - column:
+                  name: subject_groupe_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_grade_subject_groupe
+                    references: subject_groupe(id)
+
+        - createTable:
+            tableName: user_authorities
+            columns:
+              - column:
+                  name: id_user
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: id_authority
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+        - createTable:
+            tableName: subjectgroupe_student
+            columns:
+              - column:
+                  name: subjectgroupe_id
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+        - addForeignKeyConstraint:
+            baseTableName: user_authorities
+            baseColumnNames: id_user
+            constraintName: fk_user_authorities_user
+            referencedTableName: users
+            referencedColumnNames: id
+
+        - addForeignKeyConstraint:
+            baseTableName: user_authorities
+            baseColumnNames: id_authority
+            constraintName: fk_user_authorities_authority
+            referencedTableName: authorities
+            referencedColumnNames: id
+
+        - addForeignKeyConstraint:
+            baseTableName: subjectgroupe_student
+            baseColumnNames: subjectgroupe_id
+            constraintName: fk_subjectgroupe_student_sg
+            referencedTableName: subject_groupe
+            referencedColumnNames: id
+
+        - addForeignKeyConstraint:
+            baseTableName: subjectgroupe_student
+            baseColumnNames: user_id
+            constraintName: fk_subjectgroupe_student_user
+            referencedTableName: users
+            referencedColumnNames: id
+
+        - addForeignKeyConstraint:
+            baseTableName: users
+            baseColumnNames: groupe_id
+            constraintName: fk_user_groupe
+            referencedTableName: groupe
+            referencedColumnNames: id

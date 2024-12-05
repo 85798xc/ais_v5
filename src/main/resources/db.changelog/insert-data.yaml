@@ -1,0 +1,192 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2
+      author: andrej (generated)
+      changes:
+        - insert:
+            tableName: authorities
+            columns:
+              - column:
+                  name: authority
+                  value: ROLE_ADMIN
+        - insert:
+            tableName: authorities
+            columns:
+              - column:
+                  name: authority
+                  value: ROLE_TEACHER
+        - insert:
+            tableName: authorities
+            columns:
+              - column:
+                  name: authority
+                  value: ROLE_STUDENT
+
+        - insert:
+            tableName: groupe
+            columns:
+              - column:
+                  name: name
+                  value: CS-101
+        - insert:
+            tableName: groupe
+            columns:
+              - column:
+                  name: name
+                  value: CS-102
+        - insert:
+            tableName: groupe
+            columns:
+              - column:
+                  name: name
+                  value: MATH-201
+        - insert:
+            tableName: groupe
+            columns:
+              - column:
+                  name: name
+                  value: PHYS-301
+
+        - insert:
+            tableName: subject
+            columns:
+              - column:
+                  name: name
+                  value: Introduction to Programming
+              - column:
+                  name: code
+                  value: CS101
+        - insert:
+            tableName: subject
+            columns:
+              - column:
+                  name: name
+                  value: Data Structures
+              - column:
+                  name: code
+                  value: CS201
+        - insert:
+            tableName: subject
+            columns:
+              - column:
+                  name: name
+                  value: Calculus I
+              - column:
+                  name: code
+                  value: MATH101
+        - insert:
+            tableName: subject
+            columns:
+              - column:
+                  name: name
+                  value: Physics Fundamentals
+              - column:
+                  name: code
+                  value: PHYS101
+
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: full_name
+                  value: Ceburek Deda Admin
+              - column:
+                  name: username
+                  value: admin
+              - column:
+                  name: password
+                  value: $2y$10$kDI8hbc1sDt.EXSoLXr7ou0V8DC6VLomjJkgTSzchQN6deMcQ4gWG
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: full_name
+                  value: Ceburek Deda
+              - column:
+                  name: username
+                  value: prof_smith
+              - column:
+                  name: password
+                  value: $2y$10$kDI8hbc1sDt.EXSoLXr7ou0V8DC6VLomjJkgTSzchQN6deMcQ4gWG
+              - column:
+                  name: groupe_id
+                  valueNumeric: 1
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: full_name
+                  value: Ceburek Deda2
+              - column:
+                  name: username
+                  value: student1
+              - column:
+                  name: password
+                  value: $2y$10$kDI8hbc1sDt.EXSoLXr7ou0V8DC6VLomjJkgTSzchQN6deMcQ4gWG
+              - column:
+                  name: groupe_id
+                  valueNumeric: 1
+
+        - insert:
+            tableName: subject_groupe
+            columns:
+              - column:
+                  name: subject_id
+                  valueNumeric: 1
+              - column:
+                  name: groupe_id
+                  valueNumeric: 1
+
+        - insert:
+            tableName: user_authorities
+            columns:
+              - column:
+                  name: id_user
+                  valueNumeric: 1
+              - column:
+                  name: id_authority
+                  valueNumeric: 1
+        - insert:
+            tableName: user_authorities
+            columns:
+              - column:
+                  name: id_user
+                  valueNumeric: 2
+              - column:
+                  name: id_authority
+                  valueNumeric: 2
+        - insert:
+            tableName: user_authorities
+            columns:
+              - column:
+                  name: id_user
+                  valueNumeric: 3
+              - column:
+                  name: id_authority
+                  valueNumeric: 3
+
+        - insert:
+            tableName: subjectgroupe_student
+            columns:
+              - column:
+                  name: subjectgroupe_id
+                  valueNumeric: 1
+              - column:
+                  name: user_id
+                  valueNumeric: 3
+
+        - insert:
+            tableName: grades
+            columns:
+              - column:
+                  name: subject
+                  value: Introduction to Programming
+              - column:
+                  name: grade
+                  valueNumeric: 85
+              - column:
+                  name: user_id
+                  valueNumeric: 3
+              - column:
+                  name: subject_groupe_id
+                  valueNumeric: 1
