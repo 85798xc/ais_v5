@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -21,7 +22,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(configurer ->
                         configurer
                                 .requestMatchers("/login-user", "/register", "/error").permitAll()
@@ -34,7 +35,7 @@ public class SecurityConfig {
                                 .loginPage("/login-user")
                                 .loginProcessingUrl("/login")
                                 .defaultSuccessUrl("/dashboard", true) // Set default success URL
-                                .failureUrl("/login-user?error=true")
+                                .failureUrl("/login-error")
                                 .permitAll()
                 )
                 .logout(logout -> logout
