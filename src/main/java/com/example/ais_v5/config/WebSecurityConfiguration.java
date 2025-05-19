@@ -37,10 +37,21 @@ public class WebSecurityConfiguration {
         .authorizeHttpRequests(
             authorize ->
                 authorize
-                    .requestMatchers(HttpMethod.POST, "/api/v1/currencies")
-                    .hasAuthority("ADMIN")
-                    .anyRequest()
-                    .authenticated())
+//                        // Student endpoints + superior roles endpoints
+//                        .requestMatchers(HttpMethod.GET, "/api/v1/grades/grades").hasAnyAuthority("ROLE_STUDENT","ROLE_TEACHER", "ROLE_ADMIN")
+//                        .requestMatchers(HttpMethod.GET, "/api/v1/grades/gradesByUserId").hasAnyAuthority("ROLE_STUDENT","ROLE_TEACHER", "ROLE_ADMIN")
+//                        .requestMatchers(HttpMethod.GET, "/api/v1/grades/subject/{subject}").hasAnyAuthority("ROLE_STUDENT","ROLE_TEACHER", "ROLE_ADMIN")
+//
+//                        // Teacher endpoints
+//                        .requestMatchers("/api/v1/grades/**").hasAnyAuthority("ROLE_TEACHER", "ROLE_ADMIN")
+//                        .requestMatchers("/api/v1/subjectgroup/**").hasAnyAuthority("ROLE_TEACHER", "ROLE_ADMIN")
+//
+//                        // Admin endpoints
+//                        .requestMatchers("/**").hasAuthority("ROLE_ADMIN")
+
+                        // All other requests
+                        .anyRequest().authenticated()
+        )
         .httpBasic(withDefaults())
         .sessionManagement(
             session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

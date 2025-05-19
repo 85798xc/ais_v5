@@ -187,6 +187,3 @@ databaseChangeLog:
               - column:
                   name: user_id
                   valueNumeric: 3
-              - column:
-                  name: subject_groupe_id
-                  valueNumeric: 1
