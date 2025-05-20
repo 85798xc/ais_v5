@@ -198,6 +198,7 @@ public class LoginPanel extends JFrame {
     public static class AuthContext {
         @Getter
         private static String username;
+        @Getter
         private static String password;
         @Getter
         private static String role;

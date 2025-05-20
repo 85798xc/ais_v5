@@ -20,8 +20,8 @@ public class GradeService {
     private final UserRepository userRepository;
     private final GradeMapper gradeMapper;
 
-    public List<Grade> findGradesByUsername(String username) {
-        return userRepository.findByUsername(username).map(user -> gradeRepository.findByUserId(user.getId())).orElse(List.of());
+    public List<GradeDto> findGradesByUsername(String username) {
+        return gradeMapper.listToDto(userRepository.findByUsername(username).map(user -> gradeRepository.findByUserId(user.getId())).orElse(List.of()));
     }
 
     public Grade createGrade(Grade grade, String username) {

@@ -6,6 +6,9 @@ import com.example.ais_v5.entity.Grade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class GradeMapper {
@@ -25,6 +28,18 @@ public class GradeMapper {
                 userDto
         );
     }
+
+    public List<GradeDto> listToDto(List<Grade> grades) {
+        if (grades == null) {
+            return null;
+        }
+        List<GradeDto> gradeDtos = new ArrayList<>();
+        for (Grade grade : grades) {
+            gradeDtos.add(toDto(grade));
+        }
+        return gradeDtos;
+    }
+
 
     public Grade toEntity(GradeDto dto) {
         if (dto == null) {

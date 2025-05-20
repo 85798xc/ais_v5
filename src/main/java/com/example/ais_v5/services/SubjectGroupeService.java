@@ -1,5 +1,6 @@
 package com.example.ais_v5.services;
 
+import com.example.ais_v5.entity.Subject;
 import com.example.ais_v5.entity.SubjectGroupe;
 import com.example.ais_v5.repositorys.SubjectGroupeRepository;
 import lombok.RequiredArgsConstructor;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -45,4 +47,10 @@ public class SubjectGroupeService {
     public void deleteSubjectGroupe(Long id) {
         subjectGroupeRepository.deleteById(id);
     }
-}
+
+    public List<Subject> findeSubjectsByUsername(String username) {
+        List<SubjectGroupe> subjectGroupes = subjectGroupeRepository.findByUsers_Username(username);
+        return subjectGroupes.stream()
+                .map(SubjectGroupe::getSubject)
+                .collect(Collectors.toList());
+    }    }

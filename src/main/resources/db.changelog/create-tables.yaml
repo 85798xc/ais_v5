@@ -46,6 +46,9 @@ databaseChangeLog:
               - column:
                   name: groupe_id
                   type: BIGINT
+              - column:
+                  name: subjectgroupe_id
+                  type: BIGINT
 
         - createTable:
             tableName: groupe

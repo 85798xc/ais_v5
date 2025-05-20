@@ -39,6 +39,11 @@ public class User {
   @JoinColumn(name = "groupe_id")
   private Groupe groupe;
 
+  @JsonBackReference
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "subjectgroupe_id")
+  private SubjectGroupe subjectGroupe;
+
   @ManyToMany
   @JoinTable(
       name = "user_authorities",

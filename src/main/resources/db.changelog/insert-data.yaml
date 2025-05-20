@@ -126,6 +126,9 @@ databaseChangeLog:
               - column:
                   name: groupe_id
                   valueNumeric: 1
+              - column:
+                  name: subjectgroupe_id
+                  valueNumeric: 1
 
         - insert:
             tableName: subject_groupe

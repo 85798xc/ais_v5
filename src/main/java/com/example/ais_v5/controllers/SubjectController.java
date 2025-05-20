@@ -1,10 +1,13 @@
 package com.example.ais_v5.controllers;
 
 import com.example.ais_v5.entity.Subject;
+import com.example.ais_v5.services.SubjectGroupeService;
 import com.example.ais_v5.services.SubjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,10 +24,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SubjectController {
     private final SubjectService subjectService;
+    private final SubjectGroupeService subjectGroupeService;
 
-    @GetMapping
+    @GetMapping("/mysubjects")
     public List<Subject> getAllSubjects() {
-        return subjectService.getAllSubjects();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println("kek");
+        return subjectGroupeService.findeSubjectsByUsername(auth.getName());
     }
 
     @GetMapping("/{id}")

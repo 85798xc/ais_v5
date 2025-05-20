@@ -1,5 +1,6 @@
 package com.example.ais_v5.controllers;
 
+import com.example.ais_v5.dto.GradeDto;
 import com.example.ais_v5.entity.Grade;
 import com.example.ais_v5.services.GradeService;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +30,7 @@ public class GradeController {
     private final GradeService gradeService;
 
     @GetMapping("/grades")
-    public List<Grade> getUserGrades() {
+    public List<GradeDto> getUserGrades() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return gradeService.findGradesByUsername(authentication.getName());
     }

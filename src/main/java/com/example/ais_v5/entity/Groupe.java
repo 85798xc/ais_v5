@@ -1,5 +1,6 @@
 package com.example.ais_v5.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -30,6 +31,7 @@ public class Groupe {
     @OneToMany(mappedBy = "groupe", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<User> users;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "groupe", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SubjectGroupe> subjectGroupes;
 }
