@@ -29,7 +29,6 @@ public class SubjectController {
     @GetMapping("/mysubjects")
     public List<Subject> getAllSubjects() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println("kek");
         return subjectGroupeService.findeSubjectsByUsername(auth.getName());
     }
 

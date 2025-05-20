@@ -12,24 +12,20 @@ public class AdminPanel extends JFrame {
 
         JTabbedPane tabbedPane = new JTabbedPane();
 
-        // Users management tab
         JPanel usersPanel = new JPanel();
         usersPanel.add(new JLabel("Users Management"));
         tabbedPane.addTab("Users", usersPanel);
 
-        // Groups management tab
         JPanel groupsPanel = new JPanel();
         groupsPanel.add(new JLabel("Groups Management"));
         tabbedPane.addTab("Groups", groupsPanel);
 
-        // Subjects management tab
         JPanel subjectsPanel = new JPanel();
         subjectsPanel.add(new JLabel("Subjects Management"));
         tabbedPane.addTab("Subjects", subjectsPanel);
 
         add(tabbedPane);
 
-        // Add logout button
         JButton logoutButton = new JButton("Logout");
         logoutButton.addActionListener(e -> {
             this.dispose();

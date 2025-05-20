@@ -76,7 +76,7 @@ public class LoginPanel extends JFrame {
             @Override
             protected AuthResponse doInBackground() throws Exception {
                 try {
-                    // Try to access a protected endpoint to verify credentials and get role
+
                     URL url = new URL(API_BASE_URL + "/users");
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
@@ -92,8 +92,7 @@ public class LoginPanel extends JFrame {
                     int responseCode = connection.getResponseCode();
 
                     if (responseCode == HttpURLConnection.HTTP_OK) {
-                        // Get role from the "WWW-Authenticate" header or another endpoint
-                        // For simplicity, we'll use a separate endpoint to get user role
+
                         String role = getUserRole(username, password);
                         return new AuthResponse(true, role, "Login successful");
                     } else {
@@ -133,7 +132,6 @@ public class LoginPanel extends JFrame {
     }
 
     private String getUserRole(String username, String password) throws Exception {
-        // You might want to create a specific endpoint in your UserController to return role
         URL url = new URL(API_BASE_URL + "/users/role?username=" + username);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
@@ -152,11 +150,11 @@ public class LoginPanel extends JFrame {
             in.close();
             return role;
         }
-        return "ROLE_STUDENT"; // Default role if endpoint not available
+        return "ROLE_STUDENT";
     }
 
     private void redirectToPanel(String role) {
-        this.dispose(); // Close login window
+        this.dispose();
 
         if (role.equals("ROLE_ADMIN")) {
             AdminPanel adminPanel = new AdminPanel();
@@ -177,7 +175,6 @@ public class LoginPanel extends JFrame {
         });
     }
 
-    // Helper class for authentication response
     private static class AuthResponse {
         private final boolean success;
         private final String role;
@@ -194,7 +191,6 @@ public class LoginPanel extends JFrame {
         public String getMessage() { return message; }
     }
 
-    // Class to store authentication context
     public static class AuthContext {
         @Getter
         private static String username;

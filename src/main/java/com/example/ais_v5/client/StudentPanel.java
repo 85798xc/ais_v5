@@ -13,19 +13,16 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Base64;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class StudentPanel extends JFrame {
 
     private static final String GRADES_URL = "http://localhost:8080/api/v1/grades/grades";
     private static final ObjectMapper mapper = new ObjectMapper();
 
-    private JPanel gradesPanel;
-    private JPanel subjectsPanel;
+    private final JPanel gradesPanel;
+    private final JPanel subjectsPanel;
 
     public StudentPanel() {
         setTitle("Student Dashboard - " + LoginPanel.AuthContext.getUsername());
@@ -35,13 +32,11 @@ public class StudentPanel extends JFrame {
 
         JTabbedPane tabbedPane = new JTabbedPane();
 
-        // Grades Tab
         gradesPanel = new JPanel();
         gradesPanel.setLayout(new BoxLayout(gradesPanel, BoxLayout.Y_AXIS));
         JScrollPane scrollGrades = new JScrollPane(gradesPanel);
         tabbedPane.addTab("Grades", scrollGrades);
 
-        // Subjects Tab
         subjectsPanel = new JPanel();
         subjectsPanel.setLayout(new BoxLayout(subjectsPanel, BoxLayout.Y_AXIS));
         JScrollPane scrollSubjects = new JScrollPane(subjectsPanel);
@@ -49,7 +44,6 @@ public class StudentPanel extends JFrame {
 
         add(tabbedPane, BorderLayout.CENTER);
 
-        // Logout Button
         JButton logoutButton = new JButton("Logout");
         logoutButton.addActionListener((ActionEvent e) -> {
             this.dispose();
@@ -58,7 +52,6 @@ public class StudentPanel extends JFrame {
 
         add(logoutButton, BorderLayout.SOUTH);
 
-        // Load data asynchronously
         new SwingWorker<Void, Void>() {
             private List<Map<String, Object>> grades = new ArrayList<>();
 
@@ -118,15 +111,12 @@ public class StudentPanel extends JFrame {
                 conn.setRequestMethod("GET");
                 conn.setRequestProperty("Content-Type", "application/json");
 
-                // Get credentials from login context or wherever you stored them
                 String username = LoginPanel.AuthContext.getUsername();
                 String password = LoginPanel.AuthContext.getPassword(); // Make sure this is available!
 
-                // Encode credentials as Base64 for Basic Auth
                 String auth = username + ":" + password;
                 String encodedAuth = Base64.getEncoder().encodeToString(auth.getBytes());
 
-                // Set Authorization header
                 conn.setRequestProperty("Authorization", "Basic " + encodedAuth);
 
                 int responseCode = conn.getResponseCode();
@@ -144,7 +134,8 @@ public class StudentPanel extends JFrame {
                 }
                 reader.close();
 
-                return mapper.readValue(jsonResponse.toString(), new TypeReference<List<Map<String, Object>>>() {});
+                return mapper.readValue(jsonResponse.toString(), new TypeReference<List<Map<String, Object>>>() {
+                });
             }
         }.execute();
     }
