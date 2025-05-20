@@ -81,7 +81,6 @@ public class StudentPanel extends JFrame {
                 gradesPanel.removeAll();
                 subjectsPanel.removeAll();
 
-                String currentUsername = LoginPanel.AuthContext.getUsername().trim();
 
                 if (grades.isEmpty()) {
                     gradesPanel.add(new JLabel("No grades found."));
@@ -100,20 +99,11 @@ public class StudentPanel extends JFrame {
                     }
 
                     // Collect unique subjects
-                    Set<String> uniqueSubjects = grades.stream()
-                            .filter(map -> {
-                                Map<String, Object> userDto = (Map<String, Object>) map.get("userdto");
-                                String fullName = ((String) userDto.get("fullName")).trim();
-                                return currentUsername.equalsIgnoreCase(fullName);
-                            })
+                    grades.stream()
                             .map(map -> (String) map.get("subject"))
                             .distinct()
                             .sorted()
-                            .collect(Collectors.toCollection(LinkedHashSet::new));
-
-                    for (String subject : uniqueSubjects) {
-                        subjectsPanel.add(new JLabel(subject));
-                    }
+                            .forEach(subject -> subjectsPanel.add(new JLabel(subject)));
                 }
 
                 gradesPanel.revalidate();
