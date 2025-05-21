@@ -1,13 +1,8 @@
 package com.example.ais_v5.services;
 
-import com.example.ais_v5.entity.Authority;
 import com.example.ais_v5.entity.User;
 import com.example.ais_v5.repositorys.UserRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,6 +46,9 @@ public class UserService  {
         user.setAuthorities(userDetails.getAuthorities());
 
         return userRepository.save(user);
+    }
+    public Optional<User> getUserByUsername(String username) {
+       return userRepository.findByUsername(username);
     }
 
     @Transactional

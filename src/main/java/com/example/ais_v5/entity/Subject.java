@@ -1,5 +1,6 @@
 package com.example.ais_v5.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,6 +29,7 @@ public class Subject {
 
     private String code;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SubjectGroupe> subjectGroupes;
 }

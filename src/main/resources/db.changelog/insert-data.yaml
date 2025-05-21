@@ -126,6 +126,9 @@ databaseChangeLog:
               - column:
                   name: groupe_id
                   valueNumeric: 1
+              - column:
+                  name: subjectgroupe_id
+                  valueNumeric: 1
 
         - insert:
             tableName: subject_groupe
@@ -187,6 +190,3 @@ databaseChangeLog:
               - column:
                   name: user_id
                   valueNumeric: 3
-              - column:
-                  name: subject_groupe_id
-                  valueNumeric: 1

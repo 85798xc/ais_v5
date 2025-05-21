@@ -28,13 +28,10 @@ public class Grade {
 
     private Integer grade;
 
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "subject_groupe_id")
-    private SubjectGroupe subjectGroupe;
 
 }

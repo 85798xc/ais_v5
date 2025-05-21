@@ -46,6 +46,9 @@ databaseChangeLog:
               - column:
                   name: groupe_id
                   type: BIGINT
+              - column:
+                  name: subjectgroupe_id
+                  type: BIGINT
 
         - createTable:
             tableName: groupe
@@ -128,12 +131,7 @@ databaseChangeLog:
                   constraints:
                     foreignKeyName: fk_grade_user
                     references: users(id)
-              - column:
-                  name: subject_groupe_id
-                  type: BIGINT
-                  constraints:
-                    foreignKeyName: fk_grade_subject_groupe
-                    references: subject_groupe(id)
+
 
         - createTable:
             tableName: user_authorities

@@ -1,11 +1,9 @@
 package com.example.ais_v5.config;
 
 import com.example.ais_v5.security.SecurityUserService;
-
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -28,48 +26,59 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class WebSecurityConfiguration {
 
 
-  private final SecurityUserService securityUserService;
+    private final SecurityUserService securityUserService;
 
-  @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-    http.csrf(AbstractHttpConfigurer::disable)
-        .authorizeHttpRequests(
-            authorize ->
-                authorize
-                    .requestMatchers(HttpMethod.POST, "/api/v1/currencies")
-                    .hasAuthority("ADMIN")
-                    .anyRequest()
-                    .authenticated())
-        .httpBasic(withDefaults())
-        .sessionManagement(
-            session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        http.csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(
+                        authorize ->
+                                authorize
+//
+//                        .requestMatchers(HttpMethod.GET, "/api/v1/grades/grades").hasAnyAuthority("ROLE_STUDENT","ROLE_TEACHER", "ROLE_ADMIN")
+//                        .requestMatchers(HttpMethod.GET, "/api/v1/grades/gradesByUserId").hasAnyAuthority("ROLE_STUDENT","ROLE_TEACHER", "ROLE_ADMIN")
+//                        .requestMatchers(HttpMethod.GET, "/api/v1/grades/subject/{subject}").hasAnyAuthority("ROLE_STUDENT","ROLE_TEACHER", "ROLE_ADMIN")
+//
+//
+//                        .requestMatchers("/api/v1/grades/**").hasAnyAuthority("ROLE_TEACHER", "ROLE_ADMIN")
+//                        .requestMatchers("/api/v1/subjectgroup/**").hasAnyAuthority("ROLE_TEACHER", "ROLE_ADMIN")
+//
+//
+//                        .requestMatchers("/**").hasAuthority("ROLE_ADMIN")
 
-    return http.build();
-  }
 
-  @Bean
-  public UserDetailsManager userDetailsManager(DataSource dataSource) {
-    return new JdbcUserDetailsManager(dataSource);
-  }
+                                        .anyRequest().authenticated()
+                )
+                .httpBasic(withDefaults())
+                .sessionManagement(
+                        session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-  @Bean
-  public WebSecurityCustomizer webSecurityCustomizer() {
-    return (web) -> web.ignoring().requestMatchers("/swagger-ui/**", "/v3/api-docs*/**");
-  }
+        return http.build();
+    }
 
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
-  }
+    @Bean
+    public UserDetailsManager userDetailsManager(DataSource dataSource) {
+        return new JdbcUserDetailsManager(dataSource);
+    }
 
-  @Bean
-  public DaoAuthenticationProvider authProvider() {
-    DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-    authProvider.setUserDetailsService(securityUserService);
-    authProvider.setPasswordEncoder(passwordEncoder());
-    return authProvider;
-  }
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.ignoring().requestMatchers("/swagger-ui/**", "/v3/api-docs*/**");
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public DaoAuthenticationProvider authProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(securityUserService);
+        authProvider.setPasswordEncoder(passwordEncoder());
+        return authProvider;
+    }
 
 
 }
